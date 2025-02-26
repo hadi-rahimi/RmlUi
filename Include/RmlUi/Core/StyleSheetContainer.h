@@ -68,6 +68,7 @@ public:
 	void MergeStyleSheetContainer(const StyleSheetContainer& container);
 
 	MediaBlockList& _GetMediaBlocks() { return media_blocks; }
+	const MediaBlockList& _GetMediaBlocks() const { return media_blocks; }
 
 private:
 	MediaBlockList media_blocks;

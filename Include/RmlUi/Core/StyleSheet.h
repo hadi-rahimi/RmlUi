@@ -88,6 +88,9 @@ public:
 	const DecoratorPtrList& InstanceDecorators(RenderManager& render_manager, const DecoratorDeclarationList& declaration_list,
 		const PropertySource* decorator_source) const;
 
+	const StyleSheetNode* _GetRoot() const { return root.get(); }
+	StyleSheetNode* _GetRoot() { return root.get(); }
+
 private:
 	StyleSheet();
 

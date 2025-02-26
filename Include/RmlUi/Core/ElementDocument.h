@@ -90,6 +90,8 @@ public:
 	/// @note The source url originally used to load the document must still be a valid RML document.
 	void ReloadStyleSheet();
 
+	StyleSheetContainer* _GetStyleSheetContainer() { return style_sheet_container.get(); };
+
 	/// Returns the document's style sheet container.
 	const StyleSheetContainer* GetStyleSheetContainer() const;
 	/// Sets the style sheet this document, and all of its children, uses.

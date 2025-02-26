@@ -93,6 +93,7 @@ private:
 	// @param property_parser An abstract parser which specifies how the properties are parsed and stored.
 	bool ReadProperties(AbstractPropertyParser& property_parser);
 
+public:
 	// Import properties into the stylesheet node
 	// @param node Node to import into
 	// @param rule The rule name to parse
@@ -100,6 +101,7 @@ private:
 	// @param rule_specificity The specifity of the rule
 	// @return The leaf node of the rule, or nullptr on parse failure.
 	static StyleSheetNode* ImportProperties(StyleSheetNode* node, const String& rule, const PropertyDictionary& properties, int rule_specificity);
+private:
 
 	// Attempts to parse a @keyframes block
 	bool ParseKeyframeBlock(KeyframesMap& keyframes_map, const String& identifier, const String& rules, const PropertyDictionary& properties);

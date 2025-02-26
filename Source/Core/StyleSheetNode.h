@@ -29,8 +29,8 @@
 #ifndef RMLUI_CORE_STYLESHEETNODE_H
 #define RMLUI_CORE_STYLESHEETNODE_H
 
-#include "../../Include/RmlUi/Core/PropertyDictionary.h"
-#include "../../Include/RmlUi/Core/Types.h"
+#include "PropertyDictionary.h"
+#include "Types.h"
 #include "StyleSheetSelector.h"
 
 namespace Rml {
@@ -78,6 +78,15 @@ public:
 
 	/// Returns the specificity of this node.
 	int GetSpecificity() const;
+
+	const StyleSheetNodeList& _GetChildren() const { return children; }
+	StyleSheetNodeList& _GetChildren() { return children; }
+
+	const CompoundSelector& _GetSelector() const { return selector; }
+	CompoundSelector& _GetSelector() { return selector; }
+
+	const PropertyDictionary& _GetProperties() const { return properties; }
+	PropertyDictionary& _GetProperties() { return properties; }
 
 private:
 	void CalculateAndSetSpecificity();

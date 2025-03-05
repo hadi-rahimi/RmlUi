@@ -54,6 +54,15 @@ const Property* PropertyDictionary::GetProperty(PropertyId id) const
 	return &(*iterator).second;
 }
 
+Property* PropertyDictionary::_GetProperty(PropertyId id)
+{
+	PropertyMap::iterator iterator = properties.find(id);
+	if (iterator == properties.end())
+		return nullptr;
+
+	return &(*iterator).second;
+}
+
 int PropertyDictionary::GetNumProperties() const
 {
 	return (int)properties.size();

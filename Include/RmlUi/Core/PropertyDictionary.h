@@ -50,11 +50,13 @@ public:
 	void RemoveProperty(PropertyId id);
 	/// Returns the value of the property with the requested id, if one exists.
 	const Property* GetProperty(PropertyId id) const;
+	Property* _GetProperty(PropertyId id);
 
 	/// Returns the number of properties in the dictionary.
 	int GetNumProperties() const;
 	/// Returns the map of properties in the dictionary.
 	const PropertyMap& GetProperties() const;
+	PropertyMap& _GetProperties() { return properties; }
 
 	/// Imports into the dictionary, and optionally defines the specificity of, potentially
 	/// un-specified properties. In the case of id conflicts, the incoming properties will

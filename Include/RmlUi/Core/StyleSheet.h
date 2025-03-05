@@ -90,6 +90,8 @@ public:
 
 	const StyleSheetNode* _GetRoot() const { return root.get(); }
 	StyleSheetNode* _GetRoot() { return root.get(); }
+	void _ClearNodeCache() { node_cache.clear(); };
+	void _ClearDecoratorCache() { decorator_cache.clear(); };
 
 private:
 	StyleSheet();

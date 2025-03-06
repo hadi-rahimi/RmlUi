@@ -477,6 +477,35 @@ String PropertySpecification::PropertiesToString(const PropertyDictionary& dicti
 	return result;
 }
 
+String PropertySpecification::_PropertiesToString(const PropertyDictionary& dictionary, bool include_name, const char* linePrefix,
+	const char* lineSuffix) const
+{
+	const PropertyMap& properties = dictionary.GetProperties();
+
+	// For determinism we print the strings in order of increasing property ids.
+	Vector<PropertyId> ids;
+	ids.reserve(properties.size());
+	for (auto& pair : properties)
+		ids.push_back(pair.first);
+
+	std::sort(ids.begin(), ids.end());
+
+	String result;
+	for (PropertyId id : ids)
+	{
+		const Property& p = properties.find(id)->second;
+		result += linePrefix;
+		if (include_name)
+			result += property_map->GetName(id) + ": ";
+		result += p.ToString() + lineSuffix;
+	}
+
+	//if (!result.empty())
+	//	result.pop_back();
+
+	return result;
+}
+
 void PropertySpecification::ParsePropertyValues(StringList& values_list, const String& values, const SplitOption split_option) const
 {
 	const bool split_values = (split_option != SplitOption::None);

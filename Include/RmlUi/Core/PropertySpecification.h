@@ -122,6 +122,8 @@ public:
 	/// Returns the properties of dictionary converted to a string.
 	String PropertiesToString(const PropertyDictionary& dictionary, bool include_name, char delimiter) const;
 
+	String _PropertiesToString(const PropertyDictionary& dictionary, bool include_name, const char* linePrefix, const char* lineSuffix) const;
+
 private:
 	using Properties = Vector<UniquePtr<PropertyDefinition>>;
 	using Shorthands = Vector<UniquePtr<ShorthandDefinition>>;

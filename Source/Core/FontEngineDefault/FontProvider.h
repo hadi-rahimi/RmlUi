@@ -93,6 +93,10 @@ private:
 	FontFaceList fallback_font_faces;
 
 	static const String debugger_font_family_name;
+
+public:
+	static FontProvider& _Get() { return Get(); }
+	const FontFamilyMap& _GetFontFamilies() { return font_families; }
 };
 
 } // namespace Rml

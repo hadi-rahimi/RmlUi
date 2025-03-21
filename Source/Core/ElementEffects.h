@@ -64,12 +64,14 @@ private:
 	// Releases all existing effects and their element data.
 	void ReleaseEffects();
 
+public:
 	struct DecoratorEntry {
 		SharedPtr<const Decorator> decorator;
 		DecoratorDataHandle decorator_data;
 		BoxArea paint_area;
 	};
 	using DecoratorEntryList = Vector<DecoratorEntry>;
+private:
 
 	struct FilterEntry {
 		SharedPtr<const Filter> filter;
@@ -89,6 +91,10 @@ private:
 	bool effects_dirty = false;
 	// If set, element data of all decorators need to be regenerated.
 	bool effects_data_dirty = false;
+
+public:
+	const DecoratorEntryList& _GetDocorators() const { return decorators; }
+	DecoratorEntryList& _GetDocorators() { return decorators; }
 };
 
 } // namespace Rml

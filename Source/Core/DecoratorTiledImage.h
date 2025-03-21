@@ -56,6 +56,9 @@ public:
 	/// Called to render the decorator on an element.
 	void RenderElement(Element* element, DecoratorDataHandle element_data) const override;
 
+	const Tile& _GetTile() const { return tile; }
+	Tile& _GetTile() { return tile; }
+
 private:
 	Tile tile;
 };

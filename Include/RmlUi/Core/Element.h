@@ -611,6 +611,8 @@ public:
 	/// Return the computed values of the element's properties. These values are updated as appropriate on every Context::Update.
 	const ComputedValues& GetComputedValues() const;
 
+	ElementMeta* _GetMeta() { return meta; }
+
 protected:
 	void Update(float dp_ratio, Vector2f vp_dimensions);
 	void Render();

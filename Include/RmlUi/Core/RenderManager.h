@@ -113,6 +113,9 @@ public:
 
 	CompiledFilter SaveLayerAsMaskImage();
 
+	const TextureDatabase* _GetTextureDatabase() const { return texture_database.get(); }
+	TextureDatabase* _GetTextureDatabase() { return texture_database.get(); }
+
 private:
 	void ApplyClipMask(const ClipMaskGeometryList& clip_elements);
 

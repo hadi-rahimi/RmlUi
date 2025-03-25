@@ -76,10 +76,19 @@ public:
 	size_t NumSprites() const;
 
 private:
+public:
 	using Spritesheets = Vector<SharedPtr<const Spritesheet>>;
+private:
 
 	Spritesheets spritesheets;
 	SpriteMap sprite_map;
+
+public:
+	const Spritesheets& _GetSpriteSheets() const { return spritesheets; }
+	Spritesheets& _GetSpriteSheets() { return spritesheets; }
+
+	const SpriteMap& _GetSpriteMap() const { return sprite_map; }
+	SpriteMap& _GetSpriteMap() { return sprite_map; }
 };
 
 } // namespace Rml

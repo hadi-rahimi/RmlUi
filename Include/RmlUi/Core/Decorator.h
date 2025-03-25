@@ -74,6 +74,10 @@ public:
 	/// @note This value will prevent the decorator from being rendered on the given element.
 	static const DecoratorDataHandle INVALID_DECORATORDATAHANDLE = 0;
 
+public:
+	int _GetNumTextures() const { return GetNumTextures(); };
+	Texture _GetTexture(int index = 0) const { return GetTexture(index); }
+
 protected:
 	/// Adds a texture if it is valid into the list of textures in use by the decorator.
 	/// @param[in] texture The texture to add.

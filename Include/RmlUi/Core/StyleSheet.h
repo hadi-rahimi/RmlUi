@@ -92,6 +92,8 @@ public:
 	StyleSheetNode* _GetRoot() { return root.get(); }
 	void _ClearNodeCache() { node_cache.clear(); };
 	void _ClearDecoratorCache() { decorator_cache.clear(); };
+	const SpritesheetList& _GetSpriteSheetList() const { return spritesheet_list; }
+	SpritesheetList& _GetSpriteSheetList() { return spritesheet_list; }
 
 private:
 	StyleSheet();

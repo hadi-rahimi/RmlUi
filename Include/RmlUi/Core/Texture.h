@@ -52,6 +52,8 @@ public:
 	explicit operator bool() const;
 	bool operator==(const Texture& other) const;
 
+	TextureFileIndex _GetFileIndex() const { return file_index; }
+
 private:
 	Texture(RenderManager* render_manager, TextureFileIndex file_index);
 	Texture(RenderManager* render_manager, StableVectorIndex callback_index);

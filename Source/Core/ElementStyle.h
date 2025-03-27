@@ -109,6 +109,7 @@ public:
 	const Property* GetLocalProperty(PropertyId id) const;
 	/// Returns the local style properties, excluding any properties from local class.
 	const PropertyMap& GetLocalStyleProperties() const;
+	PropertyMap& _GetLocalStyleProperties();
 
 	/// Resolves a numeric value with units of number, percentage, length, or angle to their canonical unit (unit-less, 'px', or 'rad').
 	/// @param[in] value The value to be resolved.

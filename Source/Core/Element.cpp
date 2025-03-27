@@ -675,6 +675,11 @@ const PropertyMap& Element::GetLocalStyleProperties()
 	return meta->style.GetLocalStyleProperties();
 }
 
+PropertyMap& Element::_GetLocalStyleProperties()
+{
+	return meta->style._GetLocalStyleProperties();
+}
+
 float Element::ResolveLength(NumericValue value)
 {
 	float result = 0.f;

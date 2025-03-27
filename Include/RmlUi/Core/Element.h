@@ -235,6 +235,7 @@ public:
 	/// Returns the local style properties, excluding any properties from local class.
 	/// @return The local properties for this element, or nullptr if no properties defined
 	const PropertyMap& GetLocalStyleProperties();
+	PropertyMap& _GetLocalStyleProperties();
 
 	/// Resolves a length to its canonical unit ('px').
 	/// @param[in] value The numeric value.

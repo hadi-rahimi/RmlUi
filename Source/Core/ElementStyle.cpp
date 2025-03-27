@@ -344,6 +344,11 @@ const PropertyMap& ElementStyle::GetLocalStyleProperties() const
 	return inline_properties.GetProperties();
 }
 
+PropertyMap& ElementStyle::_GetLocalStyleProperties()
+{
+	return inline_properties._GetProperties();
+}
+
 static float ComputeLength(NumericValue value, Element* element)
 {
 	float font_size = 0.f;

@@ -948,16 +948,16 @@ void Context::OnElementDetach(Element* element)
 				drag_hover = nullptr;
 		}
 
-		if (drag == element)
-		{
-			// The dragged element is being removed, silently cancel the drag operation
-			if (drag_started)
-				ReleaseDragClone();
+		//if (drag == element)
+		//{
+		//	// The dragged element is being removed, silently cancel the drag operation
+		//	if (drag_started)
+		//		ReleaseDragClone();
 
-			drag = nullptr;
-			drag_hover = nullptr;
-			drag_hover_chain.clear();
-		}
+		//	drag = nullptr;
+		//	drag_hover = nullptr;
+		//	drag_hover_chain.clear();
+		//}
 	}
 
 	// Focus normally cleared and set by parent during Element::RemoveChild.

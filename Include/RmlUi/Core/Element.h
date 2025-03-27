@@ -612,6 +612,10 @@ public:
 	const ComputedValues& GetComputedValues() const;
 
 	ElementMeta* _GetMeta() { return meta; }
+	void _UpdateProperties(float dp_ratio, Vector2f vp_dimensions)
+	{
+		UpdateProperties(dp_ratio, vp_dimensions);
+	}
 
 protected:
 	void Update(float dp_ratio, Vector2f vp_dimensions);

@@ -147,6 +147,7 @@ public:
 	/// Returns the focus element.
 	/// @return The element with input focus.
 	Element* GetFocusElement();
+	Element* GetActiveElement() { return active; }
 	/// Returns the root element that holds all the documents
 	/// @return The root element.
 	Element* GetRootElement();

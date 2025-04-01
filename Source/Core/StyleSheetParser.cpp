@@ -1042,6 +1042,148 @@ StyleSheetNode* StyleSheetParser::ImportProperties(StyleSheetNode* node, const S
 	return leaf_node;
 }
 
+StyleSheetNode* StyleSheetParser::_ImportProperties(StyleSheetNode* node, const String& rule, const PropertyDictionary& properties,
+	int rule_specificity, StyleSheetNode* insertAfter)
+{
+	StyleSheetNode* leaf_node = node;
+
+	// Create each node going down the tree.
+	for (size_t index = 0; index < rule.size();)
+	{
+		CompoundSelector selector;
+
+		// Determine the combinator connecting the previous node if any.
+		for (; index > 0 && index < rule.size(); index++)
+		{
+			bool reached_end_of_combinators = false;
+			switch (rule[index])
+			{
+			case ' ': break;
+			case '>': selector.combinator = SelectorCombinator::Child; break;
+			case '+': selector.combinator = SelectorCombinator::NextSibling; break;
+			case '~': selector.combinator = SelectorCombinator::SubsequentSibling; break;
+			default: reached_end_of_combinators = true; break;
+			}
+			if (reached_end_of_combinators)
+				break;
+		}
+
+		// Determine the node's requirements.
+		while (index < rule.size())
+		{
+			size_t start_index = index;
+			size_t end_index = index + 1;
+
+			if (rule[start_index] == '*')
+				start_index += 1;
+
+			if (rule[start_index] == '[')
+			{
+				end_index = rule.find(']', start_index + 1);
+				if (end_index == String::npos)
+					return nullptr;
+				end_index += 1;
+			}
+			else
+			{
+				int parenthesis_count = 0;
+
+				// Read until we hit the next identifier. Don't match inside parenthesis in case of structural selectors.
+				for (; end_index < rule.size(); end_index++)
+				{
+					static const String identifiers = "#.:[ >+~";
+					if (parenthesis_count == 0 && identifiers.find(rule[end_index]) != String::npos)
+						break;
+
+					if (rule[end_index] == '(')
+						parenthesis_count += 1;
+					else if (rule[end_index] == ')')
+						parenthesis_count -= 1;
+				}
+			}
+
+			if (end_index > start_index)
+			{
+				const char* p_begin = rule.data() + start_index;
+				const char* p_end = rule.data() + end_index;
+
+				switch (rule[start_index])
+				{
+				case '#': selector.id = String(p_begin + 1, p_end); break;
+				case '.': selector.class_names.push_back(String(p_begin + 1, p_end)); break;
+				case ':':
+				{
+					String pseudo_class_name = String(p_begin + 1, p_end);
+					StructuralSelector node_selector = StyleSheetFactory::GetSelector(pseudo_class_name);
+					if (node_selector.type != StructuralSelectorType::Invalid)
+						selector.structural_selectors.push_back(node_selector);
+					else
+						selector.pseudo_class_names.push_back(std::move(pseudo_class_name));
+				}
+				break;
+				case '[':
+				{
+					const size_t i_attr_begin = start_index + 1;
+					const size_t i_attr_end = end_index - 1;
+					if (i_attr_end <= i_attr_begin)
+						return nullptr;
+
+					AttributeSelector attribute;
+
+					static const String attribute_operators = "=~|^$*]";
+					size_t i_cursor = Math::Min(static_cast<size_t>(rule.find_first_of(attribute_operators, i_attr_begin)), i_attr_end);
+					attribute.name = rule.substr(i_attr_begin, i_cursor - i_attr_begin);
+
+					if (i_cursor < i_attr_end)
+					{
+						const char c = rule[i_cursor];
+						attribute.type = AttributeSelectorType(c);
+
+						// Move cursor past operator. Non-'=' symbols are always followed by '=' so move two characters.
+						i_cursor += (c == '=' ? 1 : 2);
+
+						size_t i_value_end = i_attr_end;
+						if (i_cursor < i_attr_end && (rule[i_cursor] == '"' || rule[i_cursor] == '\''))
+						{
+							i_cursor += 1;
+							i_value_end -= 1;
+						}
+
+						if (i_cursor < i_value_end)
+							attribute.value = rule.substr(i_cursor, i_value_end - i_cursor);
+					}
+
+					selector.attributes.push_back(std::move(attribute));
+				}
+				break;
+				default: selector.tag = String(p_begin, p_end); break;
+				}
+			}
+
+			index = end_index;
+
+			// If we reached a combinator then we submit the current node and start fresh with a new node.
+			static const String combinators(" >+~");
+			if (combinators.find(rule[index]) != String::npos)
+				break;
+		}
+
+		// Sort the classes and pseudo-classes so they are consistent across equivalent declarations that shuffle the order around.
+		std::sort(selector.class_names.begin(), selector.class_names.end());
+		std::sort(selector.attributes.begin(), selector.attributes.end());
+		std::sort(selector.pseudo_class_names.begin(), selector.pseudo_class_names.end());
+		std::sort(selector.structural_selectors.begin(), selector.structural_selectors.end());
+
+		// Add the new child node, or retrieve the existing child if we have an exact match.
+		leaf_node = leaf_node->_GetOrCreateChildNode(std::move(selector), insertAfter);
+	}
+
+	// Merge the new properties with those already on the leaf node.
+	leaf_node->ImportProperties(properties, rule_specificity);
+
+	return leaf_node;
+}
+
 char StyleSheetParser::FindToken(String& buffer, const char* tokens, bool remove_token)
 {
 	buffer.clear();

@@ -93,6 +93,39 @@ StyleSheetNode* StyleSheetNode::GetOrCreateChildNode(CompoundSelector&& other)
 	return result;
 }
 
+StyleSheetNode* StyleSheetNode::_GetOrCreateChildNode(CompoundSelector&& other, StyleSheetNode* insertAfter)
+{
+	// See if we match an existing child
+	for (const auto& child : children)
+	{
+		if (child->selector == other)
+			return child.get();
+	}
+
+	// We don't, so create a new child
+	auto child = MakeUnique<StyleSheetNode>(this, std::move(other));
+	StyleSheetNode* result = child.get();
+
+	auto itPosition = children.end();
+	if (insertAfter)
+	{
+		for (auto it = children.begin(); it != children.end(); ++it)
+		{
+			if (it->get() == insertAfter)
+			{
+				itPosition = std::next(it);
+				break;
+			}
+		}
+	}
+
+	children.insert(itPosition, std::move(child));
+
+	//children.push_back(std::move(child));
+
+	return result;
+}
+
 void StyleSheetNode::MergeHierarchy(StyleSheetNode* node, int specificity_offset)
 {
 	RMLUI_ZoneScoped;

@@ -55,6 +55,7 @@ public:
 	StyleSheetNode* GetOrCreateChildNode(const CompoundSelector& other);
 	/// Retrieves a child node with the given requirements if they match an existing node, or else creates a new one.
 	StyleSheetNode* GetOrCreateChildNode(CompoundSelector&& other);
+	StyleSheetNode* _GetOrCreateChildNode(CompoundSelector&& other, StyleSheetNode* insertAfter);
 
 	/// Merges an entire tree hierarchy into our hierarchy.
 	void MergeHierarchy(StyleSheetNode* node, int specificity_offset = 0);

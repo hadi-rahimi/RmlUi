@@ -617,6 +617,7 @@ public:
 	{
 		UpdateProperties(dp_ratio, vp_dimensions);
 	}
+	void _DirtyLayout() { DirtyLayout(); }
 
 protected:
 	void Update(float dp_ratio, Vector2f vp_dimensions);

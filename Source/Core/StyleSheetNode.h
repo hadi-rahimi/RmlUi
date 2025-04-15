@@ -89,6 +89,8 @@ public:
 	const PropertyDictionary& _GetProperties() const { return properties; }
 	PropertyDictionary& _GetProperties() { return properties; }
 
+	void _CalculateAndSetSpecificity() { _CalculateAndSetSpecificity(); };
+
 private:
 	void CalculateAndSetSpecificity();
 

@@ -69,6 +69,8 @@ public:
 	/// @return True.
 	bool GetIntrinsicDimensions(Vector2f& dimensions, float& ratio) override;
 
+	WidgetSlider* _GetWidget() { return widget; }
+
 private:
 	WidgetSlider* widget;
 };

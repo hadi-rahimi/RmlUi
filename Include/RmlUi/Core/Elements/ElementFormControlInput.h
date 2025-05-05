@@ -83,6 +83,8 @@ public:
 	/// @note Only applies to text and password input types.
 	void SetCompositionRange(int range_start, int range_end);
 
+	UniquePtr<InputType>& _GetInputType() { return type; }
+
 protected:
 	/// Updates the element's underlying type.
 	void OnUpdate() override;

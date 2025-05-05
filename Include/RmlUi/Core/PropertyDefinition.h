@@ -88,10 +88,15 @@ private:
 	bool inherited;
 	bool forces_layout;
 
+public:
 	struct ParserState {
 		PropertyParser* parser;
 		ParameterMap parameters;
 	};
+
+	const Vector<ParserState>& _GetParsers() const { return parsers; }
+
+private:
 
 	Vector<ParserState> parsers;
 
